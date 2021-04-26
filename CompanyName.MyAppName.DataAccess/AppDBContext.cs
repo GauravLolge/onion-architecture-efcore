@@ -1,6 +1,5 @@
 ﻿using CompanyName.MyAppName.DataAccess.EntityMapping;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace CompanyName.MyAppName.DataAccess
 {
@@ -15,17 +14,18 @@ namespace CompanyName.MyAppName.DataAccess
         /// <param name="options"></param>
         public AppDBContext(DbContextOptions options) : base(options)
         {
+
         }
 
-        /// <summary>
-        /// Sets collection of given entity.
-        /// </summary>
-        /// <typeparam name="TEntity">Type of entity</typeparam>
-        /// <returns>Collection the given enity</returns>
-        //public new DbSet<TEntity> Set<TEntity>() where TEntity : class
-        //{
-        //    return base.Set<TEntity>();
-        //}
+        ///// <summary>
+        ///// Sets collection of given entity.
+        ///// </summary>
+        ///// <typeparam name="TEntity">Type of entity</typeparam>
+        ///// <returns>Collection the given enity</returns>
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
+        {
+            return base.Set<TEntity>();
+        }
 
         /// <summary>
         /// 

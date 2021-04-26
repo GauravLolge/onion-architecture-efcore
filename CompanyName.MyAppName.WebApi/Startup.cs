@@ -1,5 +1,6 @@
 using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repository;
+using CompanyName.MyAppName.DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,11 +24,15 @@ namespace CompanyName.MyAppName.WebApi
         {
             services.AddControllers();
 
-            services.AddDbContext<AppDBContext>(options => {
+            services.AddDbContext<AppDBContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<DbContext,AppDBContext>();
+            services.AddScoped<DbContext, AppDBContext>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
@@ -48,7 +53,7 @@ namespace CompanyName.MyAppName.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
-            });           
+            });
         }
     }
 }

@@ -8,6 +8,15 @@ namespace CompanyName.MyAppName.DataAccess
     /// </summary>
     public class AppDBContext : DbContext
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public AppDBContext()
+        {
+
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -17,16 +26,6 @@ namespace CompanyName.MyAppName.DataAccess
 
         }
 
-        ///// <summary>
-        ///// Sets collection of given entity.
-        ///// </summary>
-        ///// <typeparam name="TEntity">Type of entity</typeparam>
-        ///// <returns>Collection the given enity</returns>
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
-        {
-            return base.Set<TEntity>();
-        }
-
         /// <summary>
         /// 
         /// </summary>  
@@ -34,6 +33,7 @@ namespace CompanyName.MyAppName.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserDetailConfiguration());
         }
     }
 }

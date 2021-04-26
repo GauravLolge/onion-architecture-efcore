@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyName.MyAppName.DataAccess.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20210423153132_InitDb")]
+    [Migration("20210426172431_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,23 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", "dbo");
+                });
+
+            modelBuilder.Entity("CompanyName.MyAppName.Core.Entities.UserDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserDetail", "dbo");
                 });
 #pragma warning restore 612, 618
         }

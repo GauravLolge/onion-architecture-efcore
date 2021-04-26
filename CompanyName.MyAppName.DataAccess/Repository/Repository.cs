@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using CompanyName.MyAppName.DataAccess.UnitOfWork;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace CompanyName.MyAppName.DataAccess.Repository
         private readonly DbContext context;
         protected internal DbSet<TEntity> dbSet;
 
-        public Repository(DbContext context)
+        public Repository(IUnitOfWork unitOfWork)
         {
-            this.context = context;
+            this.context = unitOfWork.AppDbContext;
             this.dbSet = context.Set<TEntity>();
         }
 

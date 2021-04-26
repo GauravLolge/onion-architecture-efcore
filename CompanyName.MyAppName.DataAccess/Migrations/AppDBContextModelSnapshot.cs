@@ -34,6 +34,23 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
 
                     b.ToTable("User", "dbo");
                 });
+
+            modelBuilder.Entity("CompanyName.MyAppName.Core.Entities.UserDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserDetail", "dbo");
+                });
 #pragma warning restore 612, 618
         }
     }

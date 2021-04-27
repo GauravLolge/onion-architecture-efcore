@@ -1,4 +1,6 @@
 ﻿using CompanyName.MyAppName.Infra;
+using CompanyName.MyAppName.Infra.ExceptionHandling;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -81,9 +83,9 @@ namespace CompanyName.MyAppName.DataAccess
 
                 context.SaveChanges();
             }
-            catch(Exception ex)
+            catch(Exception exp)
             {
-
+                HandleException(exp);
             }
 
             return result;
@@ -169,6 +171,52 @@ namespace CompanyName.MyAppName.DataAccess
 
                 entity.Property(Constants.ShadowProperty.ModifiedDate).CurrentValue = DateTime.UtcNow;
                 entity.Property(Constants.ShadowProperty.ModifiedBy).CurrentValue = "Gaurav010001";
+            }
+        }
+
+        /// <summary>
+        /// Handles the exception.
+        /// </summary>
+        /// <param name="ex">The exception</param>
+        private void HandleException(Exception exception)
+        {            
+            if (exception is DbUpdateConcurrencyException concurrencyEx)
+            {
+                // Concurrency check
+                throw new CustomException(Constants.Error.ERROR_CONCURRENCY,
+                                          concurrencyEx);
+            }
+
+            if (exception is DbUpdateException dbUpdateEx)
+            {
+                if (dbUpdateEx.InnerException != null &&
+                    dbUpdateEx.InnerException.InnerException != null)
+                {
+                    if (dbUpdateEx.InnerException.InnerException is SqlException sqlException)
+                    {
+                        switch (sqlException.Number)
+                        {
+                            case 2627:
+                                // Unique constraint error.
+                                throw new CustomException("Record is not Unique", sqlException);
+
+                            case 547:
+                                // Constraint check violation.
+                                throw new CustomException("Constraint Check Violation", sqlException);
+
+                            case 2601:
+                                // Duplicated key row error.
+                                // Constraint violation exception.
+                                throw new CustomException("Constraint Check Violation", sqlException);
+
+                            default:
+                                // A custom exception of yours for other DB issues
+                                throw sqlException;
+                        }
+                    }
+
+                    throw dbUpdateEx;
+                }
             }
         }
 

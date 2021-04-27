@@ -17,5 +17,18 @@
         }
 
         #endregion Shadow Properties
+
+        #region Error
+
+        /// <summary>
+        /// Contains constants for User.
+        /// </summary>
+        public static class Error
+        {
+            public const int ERROR_UNIQUECONSTRAINT = 2601;
+            public const string ERROR_CONCURRENCY = "DbConcurrencyError";
+        }
+
+        #endregion Error
     }
 }

@@ -10,12 +10,12 @@ namespace CompanyName.MyAppName.DataAccess
     public class UnitOfWork : IUnitOfWork
     {
         /// <summary>
-        /// The context
+        /// The context.
         /// </summary>
         private AppDbContext context;
 
         /// <summary>
-        /// The database context transaction
+        /// The database context transaction.
         /// </summary>
         private readonly IDbContextTransaction dbContextTransaction = null;
 

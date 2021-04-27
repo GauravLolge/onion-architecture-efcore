@@ -1,5 +1,7 @@
 ﻿using CompanyName.MyAppName.DataAccess.EntityMapping;
+using CompanyName.MyAppName.Infra;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CompanyName.MyAppName.DataAccess
 {
@@ -41,6 +43,26 @@ namespace CompanyName.MyAppName.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+
+            SetShadowProperties(modelBuilder);
+        }
+
+        /// <summary>
+        /// Sets the shodow properties.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder.</param>
+        private void SetShadowProperties(ModelBuilder modelBuilder)
+        {
+            var allEntities = modelBuilder.Model.GetEntityTypes();
+
+            foreach (var entity in allEntities)
+            {
+                entity.AddProperty(Constants.Common.CreatedBy, typeof(DateTime));
+                entity.AddProperty(Constants.Common.CreatedDate, typeof(DateTime));
+                entity.AddProperty(Constants.Common.ModifiedBy, typeof(DateTime));
+                entity.AddProperty(Constants.Common.ModifiedDate, typeof(DateTime));
+                entity.AddProperty(Constants.Common.RowVersion, typeof(byte[]));
+            }
         }
     }
 }

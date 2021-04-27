@@ -42,7 +42,9 @@ namespace CompanyName.MyAppName.Domain.Services.UserService
         {
             if (user != null)
             {
-                User userEntity = new User() { Name = user.Name };
+                User userEntity = new User() { Name = user.Name, IsActive = user.IsActive };
+
+                userEntity.UserSetting = new UserSetting() { Setting = "" };
 
                 userRepository.Add(userEntity);
 

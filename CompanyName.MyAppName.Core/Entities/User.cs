@@ -24,5 +24,12 @@
         /// </value>
         public string Name { get; set; }
 
+
+        #region Relational Properties
+
+        public virtual UserSetting UserSetting { get; set; }
+
+        #endregion Relational Properties
+
     }
 }

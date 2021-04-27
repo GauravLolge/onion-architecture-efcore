@@ -16,9 +16,11 @@ namespace CompanyName.MyAppName.WebApi.Controllers
 
         public IActionResult Index()
         {
-            Dm.User user = new Dm.User() { Name = "Tom" };
+            Dm.User user = new Dm.User() { Name = "Tom" ,IsActive = true };
 
             userService.AddUser(user);
+
+            var users = userService.GetUserById(2);
 
             return View();
         }

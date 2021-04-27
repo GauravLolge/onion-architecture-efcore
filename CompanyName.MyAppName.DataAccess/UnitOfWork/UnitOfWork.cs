@@ -166,7 +166,7 @@ namespace CompanyName.MyAppName.DataAccess
                 if (entity.State == EntityState.Added)
                 {
                     entity.Property(Constants.ShadowProperty.CreatedDate).CurrentValue = DateTime.UtcNow;
-                    entity.Property(Constants.ShadowProperty.ModifiedBy).CurrentValue = "Gaurav010001";
+                    entity.Property(Constants.ShadowProperty.CreatedBy).CurrentValue = "Gaurav010001";
                 }
 
                 entity.Property(Constants.ShadowProperty.ModifiedDate).CurrentValue = DateTime.UtcNow;

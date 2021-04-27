@@ -18,12 +18,15 @@ namespace CompanyName.MyAppName.DataAccess.EntityMapping
         /// <exception cref="System.NotImplementedException"></exception>
         public void Configure(EntityTypeBuilder<BaseEntity> builder)
         {
-           builder.Property(c => c.RowVersion)
-                .IsRequired()
-                .HasComputedColumnSql()
-                .IsRowVersion()
-                .IsConcurrencyToken()
-                ;
+            builder.Property(c => c.RowVersion)
+                 .IsRequired()
+                 .HasComputedColumnSql()
+                 .IsRowVersion()
+                 .IsConcurrencyToken();
+
+            builder.Property(c => c.IsActive)
+                 .HasDefaultValueSql("true");
+                 
         }
     }
 }

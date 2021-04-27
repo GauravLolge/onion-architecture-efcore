@@ -35,5 +35,15 @@ namespace CompanyName.MyAppName.DataAccess
         /// </summary>
         void Commit();
 
+        /// <summary>
+        /// Enables the automatic detect changes.
+        /// </summary>
+        void EnableAutoDetectChanges();
+
+        /// <summary>
+        /// Disables the automatic detect changes.
+        /// </summary>
+        void DisableAutoDetectChanges();
+
     }
 }

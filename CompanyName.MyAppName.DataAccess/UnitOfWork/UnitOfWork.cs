@@ -122,6 +122,22 @@ namespace CompanyName.MyAppName.DataAccess
             }
         }
 
+        /// <summary>
+        /// Enables the automatic detect changes.
+        /// </summary>
+        public void EnableAutoDetectChanges()
+        {
+            context.ChangeTracker.AutoDetectChangesEnabled = true;
+        }
+
+        /// <summary>
+        /// Disables the automatic detect changes.
+        /// </summary>
+        public void DisableAutoDetectChanges()
+        {
+            context.ChangeTracker.AutoDetectChangesEnabled = false;
+        }
+
         #endregion Public Methods
 
         #region Private Methods

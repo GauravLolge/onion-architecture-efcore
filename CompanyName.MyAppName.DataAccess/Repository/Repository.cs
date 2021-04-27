@@ -13,6 +13,8 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
     /// <seealso cref="CompanyName.MyAppName.DataAccess.Repositories.IRepository{TEntity}" />
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
+        #region Member Variables
+
         /// <summary>
         /// The context
         /// </summary>
@@ -23,6 +25,10 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
         /// </summary>
         protected internal DbSet<TEntity> dbSet;
 
+        #endregion Member Variables
+
+        #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
         /// </summary>
@@ -32,6 +38,10 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
             this.context = unitOfWork.AppDbContext;
             this.dbSet = context.Set<TEntity>();
         }
+
+        #endregion Constructor
+
+        #region Protected Members
 
         /// <summary>
         /// Gets the table.
@@ -60,6 +70,10 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
                 return dbSet.AsNoTracking();
             }
         }
+
+        #endregion Protected Members
+
+        #region Public Methods
 
         /// <summary>
         /// Gets the queryable.
@@ -196,7 +210,7 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
         /// <returns>IEnumerable list of entity.</returns>
         public IEnumerable<TEntity> GetGenericEntitiesWithRawSql<T>(string query, Dictionary<string, object> sqlParameters = null)
         {
-            List<T> result = new List<T>();
+            List<TEntity> result = new List<TEntity>();
 
             if (!string.IsNullOrWhiteSpace(query))
             {
@@ -210,10 +224,12 @@ namespace CompanyName.MyAppName.DataAccess.Repositories
                     }
                 }
 
-                result = null;
+                result = dbSet.FromSqlRaw(query, sqlParams.ToArray()).ToList();
             }
 
-            return null;
+            return result;
         }
+
+        #endregion Public Methods
     }
 }

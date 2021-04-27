@@ -1,9 +1,11 @@
-﻿namespace CompanyName.MyAppName.DataAccess
+﻿using System;
+
+namespace CompanyName.MyAppName.DataAccess
 {
     /// <summary>
     /// Provides access to various members if unit of work.
     /// </summary>
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         /// <summary>
         /// Gets the application database context.
@@ -16,7 +18,7 @@
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        void Save();
+        int Save();
 
         /// <summary>
         /// Begins the transaction.

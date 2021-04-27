@@ -7,7 +7,7 @@
     {
         #region Shadow Properties
 
-        public static class Common
+        public static class ShadowProperty
         {
             public static string CreatedBy = "CreatedBy";
             public static string CreatedDate = "CreatedDate";

@@ -4,7 +4,8 @@
     /// <summary>
     /// Provides various members of user entity.
     /// </summary>
-    public class User
+    /// <seealso cref="CompanyName.MyAppName.Core.Entities.BaseEntity" />
+    public class User : BaseEntity
     {
 
         /// <summary>

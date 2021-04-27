@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿using CompanyName.MyAppName.Infra;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
+using System.Linq;
+using System.Threading;
 
 namespace CompanyName.MyAppName.DataAccess
 {
@@ -9,6 +13,8 @@ namespace CompanyName.MyAppName.DataAccess
     /// <seealso cref="CompanyName.MyAppName.DataAccess.IUnitOfWork" />
     public class UnitOfWork : IUnitOfWork
     {
+        #region Member Variables
+
         /// <summary>
         /// The context.
         /// </summary>
@@ -20,6 +26,15 @@ namespace CompanyName.MyAppName.DataAccess
         private readonly IDbContextTransaction dbContextTransaction = null;
 
         /// <summary>
+        /// The disposed.
+        /// </summary>
+        private bool disposed = false;
+
+        #endregion Member Variables
+
+        #region Constructors
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -27,6 +42,10 @@ namespace CompanyName.MyAppName.DataAccess
         {
             this.context = context;
         }
+
+        #endregion Constructors
+
+        #region public Methods
 
         /// <summary>
         /// Gets the application database context.
@@ -48,20 +67,26 @@ namespace CompanyName.MyAppName.DataAccess
         }
 
         /// <summary>
-        /// Saves this instance.
+        /// Saves the specified user name.
         /// </summary>
-        public void Save()
+        /// <param name="userName">Name of the user.</param>
+        /// <returns>1/0 based on success/fail</returns>
+        public int Save()
         {
-            context.SaveChanges();
-        }
+            int result = 0;
 
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            try
+            {
+                SetShadowProperties();
+
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -69,7 +94,7 @@ namespace CompanyName.MyAppName.DataAccess
         /// </summary>
         public void BeginTransaction()
         {
-            if(dbContextTransaction == null)
+            if (dbContextTransaction == null)
             {
                 context.Database.BeginTransaction();
             }
@@ -96,5 +121,83 @@ namespace CompanyName.MyAppName.DataAccess
                 context.Database.CommitTransaction();
             }
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        /// <summary>
+        /// Sets the shadow properties.
+        /// </summary>
+        private void SetShadowProperties()
+        {
+            string user = string.Empty;
+
+            var entities = context.ChangeTracker
+                                  .Entries()
+                                  .Where(x => x.State == EntityState.Added ||
+                                              x.State == EntityState.Modified);
+
+            //if (string.IsNullOrWhiteSpace(user))
+            //{   
+            //    user = Thread.CurrentPrincipal.Identity.Name;
+            //}
+
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    entity.Property(Constants.ShadowProperty.CreatedDate).CurrentValue = DateTime.UtcNow;
+                    entity.Property(Constants.ShadowProperty.ModifiedBy).CurrentValue = "Gaurav010001";
+                }
+
+                entity.Property(Constants.ShadowProperty.ModifiedDate).CurrentValue = DateTime.UtcNow;
+                entity.Property(Constants.ShadowProperty.ModifiedBy).CurrentValue = "Gaurav010001";
+            }
+        }
+
+        #endregion Private Methods
+
+        #region IDisposable 
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed state (managed objects).
+                    if (dbContextTransaction != null)
+                    {
+                        dbContextTransaction.Dispose();
+                    }
+
+                    if (context != null)
+                    {
+                        context.Dispose();
+                    }
+                }
+
+                // Free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // Set large fields to null.
+
+                disposed = true;
+            }
+        }
+
+        #endregion IDisposable 
     }
 }

@@ -44,24 +44,23 @@ namespace CompanyName.MyAppName.DataAccess
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
-            SetShadowProperties(modelBuilder);
+            AddShadowProperties(modelBuilder);
         }
 
         /// <summary>
-        /// Sets the shodow properties.
+        /// Adds the shodow properties.
         /// </summary>
         /// <param name="modelBuilder">The model builder.</param>
-        private void SetShadowProperties(ModelBuilder modelBuilder)
+        private void AddShadowProperties(ModelBuilder modelBuilder)
         {
             var allEntities = modelBuilder.Model.GetEntityTypes();
 
             foreach (var entity in allEntities)
             {
-                entity.AddProperty(Constants.Common.CreatedBy, typeof(DateTime));
-                entity.AddProperty(Constants.Common.CreatedDate, typeof(DateTime));
-                entity.AddProperty(Constants.Common.ModifiedBy, typeof(DateTime));
-                entity.AddProperty(Constants.Common.ModifiedDate, typeof(DateTime));
-                entity.AddProperty(Constants.Common.RowVersion, typeof(byte[]));
+                entity.AddProperty(Constants.ShadowProperty.CreatedBy, typeof(string));
+                entity.AddProperty(Constants.ShadowProperty.CreatedDate, typeof(DateTime));
+                entity.AddProperty(Constants.ShadowProperty.ModifiedBy, typeof(string));
+                entity.AddProperty(Constants.ShadowProperty.ModifiedDate, typeof(DateTime));
             }
         }
     }

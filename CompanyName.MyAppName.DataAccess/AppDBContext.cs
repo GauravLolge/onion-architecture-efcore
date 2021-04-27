@@ -63,6 +63,7 @@ namespace CompanyName.MyAppName.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserSettingConfiguration());
 
             AddShadowProperties(modelBuilder);
         }

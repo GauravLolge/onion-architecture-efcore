@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyName.MyAppName.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210427132938_InitDb")]
+    [Migration("20210427141502_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSetting");
+                    b.ToTable("UserSetting", "dbo");
                 });
 
             modelBuilder.Entity("CompanyName.MyAppName.Core.Entities.UserSetting", b =>

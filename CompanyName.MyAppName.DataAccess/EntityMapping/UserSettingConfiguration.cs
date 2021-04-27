@@ -15,6 +15,8 @@ namespace CompanyName.MyAppName.DataAccess.EntityMapping
             builder.HasOne(c => c.User)
                    .WithOne(c => c.UserSetting)
                    .HasForeignKey<UserSetting>(c => c.UserId);
+
+            builder.HasQueryFilter(c => c.IsActive == true);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserSetting",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -59,6 +60,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSetting_UserId",
+                schema: "dbo",
                 table: "UserSetting",
                 column: "UserId",
                 unique: true);
@@ -67,7 +69,8 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserSetting");
+                name: "UserSetting",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "User",

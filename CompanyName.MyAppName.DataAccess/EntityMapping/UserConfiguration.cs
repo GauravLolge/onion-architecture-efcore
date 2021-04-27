@@ -23,7 +23,7 @@ namespace CompanyName.MyAppName.DataAccess.EntityMapping
 
             builder.Property(c => c.Name)
                    .HasMaxLength(200)
-                   .IsRequired();
+                   .IsRequired();           
         }
     }
 }

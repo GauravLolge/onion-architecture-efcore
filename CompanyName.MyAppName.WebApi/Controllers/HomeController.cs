@@ -20,7 +20,13 @@ namespace CompanyName.MyAppName.WebApi.Controllers
 
             userService.AddUser(user);
 
-            var users = userService.GetUserById(2);
+            var users = userService.GetAllUsers();
+
+
+            foreach(var u in users)
+            {
+                var settting = u.UserSetting;
+            }
 
             return View();
         }

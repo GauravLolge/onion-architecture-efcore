@@ -79,7 +79,7 @@ namespace CompanyName.MyAppName.Domain.Services.UserService
         /// <returns></returns>
         public List<User> GetAllUsers()
         {
-            return userRepository.GetQueryable(false).ToList();
+            return userRepository.GetQueryable().ToList();
         }
 
         /// <summary>

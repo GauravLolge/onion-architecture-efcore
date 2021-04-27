@@ -94,7 +94,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserSetting");
+                    b.ToTable("UserSetting", "dbo");
                 });
 
             modelBuilder.Entity("CompanyName.MyAppName.Core.Entities.UserSetting", b =>

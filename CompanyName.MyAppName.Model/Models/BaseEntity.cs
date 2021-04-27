@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CompanyName.MyAppName.Core.Entities
+namespace CompanyName.MyAppName.Model.Models
 {
     /// <summary>
     /// The base entity for application entities.
     /// </summary>
-    public class BaseEntity
+    public class BaseEntity 
     {
         /// <summary>
         /// Gets or sets the row version.

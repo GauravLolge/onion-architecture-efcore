@@ -1,30 +1,25 @@
-﻿using CompanyName.MyAppName.Core.Entities;
-using CompanyName.MyAppName.DataAccess;
-using CompanyName.MyAppName.DataAccess.Repositories;
+﻿using CompanyName.MyAppName.Domain.Services.UserService;
 using Microsoft.AspNetCore.Mvc;
+using Dm = CompanyName.MyAppName.Model.Models;
 
 namespace CompanyName.MyAppName.WebApi.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IRepository<User> userRepo;
-        private readonly IUnitOfWork unitOfWork;
 
+        private readonly IUserService userService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HomeController"/> class.
-        /// </summary>
-        /// <param name="userRepo">The user repo.</param>
-        /// <param name="unitOfWork">The unit of work.</param>
-        public HomeController(IRepository<User> userRepo,
-                              IUnitOfWork unitOfWork)
+        public HomeController(IUserService userService)
         {
-            this.userRepo = userRepo;
-            this.unitOfWork = unitOfWork;
+            this.userService = userService;
         }
 
         public IActionResult Index()
         {
+            Dm.User user = new Dm.User() { Name = "Tom" };
+
+            userService.AddUser(user);
+
             return View();
         }
     }

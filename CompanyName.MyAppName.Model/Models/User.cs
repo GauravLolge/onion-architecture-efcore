@@ -1,13 +1,7 @@
-﻿namespace CompanyName.MyAppName.Core.Entities
+﻿namespace CompanyName.MyAppName.Model.Models
 {
-
-    /// <summary>
-    /// Provides various members of user entity.
-    /// </summary>
-    /// <seealso cref="CompanyName.MyAppName.Core.Entities.BaseEntity" />
     public class User : BaseEntity
     {
-
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -23,6 +17,5 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
-
     }
 }

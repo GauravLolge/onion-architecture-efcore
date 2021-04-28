@@ -78,10 +78,10 @@ namespace CompanyName.MyAppName.DataAccess
 
             foreach (var entity in allEntities)
             {
-                entity.AddProperty(Constants.ShadowProperty.CreatedBy, typeof(string));
-                entity.AddProperty(Constants.ShadowProperty.CreatedDate, typeof(DateTime));
-                entity.AddProperty(Constants.ShadowProperty.ModifiedBy, typeof(string));
-                entity.AddProperty(Constants.ShadowProperty.ModifiedDate, typeof(DateTime));
+                entity.AddProperty(Constants.ShadowProperty.CREATED_BY, typeof(string));
+                entity.AddProperty(Constants.ShadowProperty.CREATED_DATE, typeof(DateTime));
+                entity.AddProperty(Constants.ShadowProperty.MODIFIED_BY, typeof(string));
+                entity.AddProperty(Constants.ShadowProperty.MODIFIED_DATE, typeof(DateTime));
             }
         }
     }

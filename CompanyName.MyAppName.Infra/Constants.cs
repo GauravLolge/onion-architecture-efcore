@@ -9,16 +9,15 @@
 
         public static class ShadowProperty
         {
-            public static string CreatedBy = "CreatedBy";
-            public static string CreatedDate = "CreatedDate";
-            public static string ModifiedBy = "ModifiedBy";
-            public static string ModifiedDate = "ModifiedDate";
-            public static string RowVersion = "RowVersion";
+            public const string CREATED_BY = "CreatedBy";
+            public const string CREATED_DATE = "CreatedDate";
+            public const string MODIFIED_BY = "ModifiedBy";
+            public const string MODIFIED_DATE = "ModifiedDate";
         }
 
         #endregion Shadow Properties
 
-        #region Error
+        #region Errors
 
         /// <summary>
         /// Contains constants for User.
@@ -29,6 +28,26 @@
             public const string ERROR_CONCURRENCY = "DbConcurrencyError";
         }
 
-        #endregion Error
+        #endregion Errors
+
+        #region Config Keys
+
+        public static class ConfigKeys
+        {
+            public const string JWT_KEY = "Jwt:SecretKey";
+            public const string JWT_ISSUER = "Jwt:Issuer";
+            public const string JWT_EXPIRY_TIME = "Jwt:ExpiryTime";
+        }
+
+        #endregion Config Keys
+
+        #region Common
+
+        public class Common
+        {
+            
+        }
+
+        #endregion Common
     }
 }

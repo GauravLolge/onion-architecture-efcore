@@ -165,12 +165,12 @@ namespace CompanyName.MyAppName.DataAccess
             {
                 if (entity.State == EntityState.Added)
                 {
-                    entity.Property(Constants.ShadowProperty.CreatedDate).CurrentValue = DateTime.UtcNow;
-                    entity.Property(Constants.ShadowProperty.CreatedBy).CurrentValue = "Gaurav010001";
+                    entity.Property(Constants.ShadowProperty.CREATED_DATE).CurrentValue = DateTime.UtcNow;
+                    entity.Property(Constants.ShadowProperty.CREATED_BY).CurrentValue = "Gaurav010001";
                 }
 
-                entity.Property(Constants.ShadowProperty.ModifiedDate).CurrentValue = DateTime.UtcNow;
-                entity.Property(Constants.ShadowProperty.ModifiedBy).CurrentValue = "Gaurav010001";
+                entity.Property(Constants.ShadowProperty.MODIFIED_DATE).CurrentValue = DateTime.UtcNow;
+                entity.Property(Constants.ShadowProperty.MODIFIED_BY).CurrentValue = "Gaurav010001";
             }
         }
 

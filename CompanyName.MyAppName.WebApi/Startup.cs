@@ -1,12 +1,16 @@
 using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repositories;
-using CompanyName.MyAppName.Domain.Services.UserService;
+using CompanyName.MyAppName.Domain.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
+using System.Text;
 
 namespace CompanyName.MyAppName.WebApi
 {
@@ -38,7 +42,29 @@ namespace CompanyName.MyAppName.WebApi
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => options.EnableEndpointRouting = false);
+
+            // Jwt authentication settings.
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        };
+                    });
+
+            // Set formatter json/xml.
+            services.AddMvc()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             // pass connection string to db context.
             services.AddDbContext<AppDbContext>(options =>
@@ -49,13 +75,13 @@ namespace CompanyName.MyAppName.WebApi
             // Mapping application db context.
             services.AddScoped<DbContext, AppDbContext>();
 
-            // Mapping unit of work
+            // Mapping unit of work.
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            // Mapping repositories
+            // Mapping repositories.
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            // Mapping Services
+            // Mapping Services.
             services.AddScoped<IUserService,UserService>();
 
         }
@@ -78,10 +104,14 @@ namespace CompanyName.MyAppName.WebApi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
-            });
+            app.UseMvc();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute("Default", "api/{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            
         }
     }
 }

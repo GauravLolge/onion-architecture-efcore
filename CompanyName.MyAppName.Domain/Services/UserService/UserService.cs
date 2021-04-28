@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dm = CompanyName.MyAppName.Model.Models;
 
-namespace CompanyName.MyAppName.Domain.Services.UserService
+namespace CompanyName.MyAppName.Domain.Services
 {
     /// <summary>
     /// Provides various members to handle operations for User entity.

@@ -49,7 +49,7 @@ namespace CompanyName.MyAppName.WebApi.Controllers
             if ("" != null && IsValidUser(null))
             {
                 var authToken = SecurityHelper.GenerateJSONWebToken(projectSettings);
-                return Ok();
+                return Ok(new { authToken });
             }
 
             return response;

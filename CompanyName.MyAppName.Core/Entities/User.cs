@@ -1,4 +1,6 @@
-﻿namespace CompanyName.MyAppName.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CompanyName.MyAppName.Core.Entities
 {
 
     /// <summary>
@@ -23,6 +25,15 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
+        [Required]
+        public string Password { get; set; }
 
 
         #region Relational Properties

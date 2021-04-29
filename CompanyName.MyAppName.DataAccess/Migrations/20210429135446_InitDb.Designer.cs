@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyName.MyAppName.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210427141502_InitDb")]
+    [Migration("20210429135446_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,8 +45,13 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -54,6 +59,8 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                         .HasColumnType("rowversion");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Name");
 
                     b.ToTable("User", "dbo");
                 });
@@ -86,7 +93,8 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                         .HasColumnType("rowversion");
 
                     b.Property<string>("Setting")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

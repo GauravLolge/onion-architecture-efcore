@@ -17,7 +17,8 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -28,6 +29,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                    table.UniqueConstraint("AK_User_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,7 +40,7 @@ namespace CompanyName.MyAppName.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Setting = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Setting = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),

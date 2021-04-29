@@ -17,5 +17,13 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Password.
+        /// </summary>
+        /// <value>
+        /// The passord.
+        /// </value>
+        public string Password { get; set; }
     }
 }

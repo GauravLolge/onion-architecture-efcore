@@ -21,9 +21,15 @@ namespace CompanyName.MyAppName.DataAccess.EntityMapping
 
             builder.HasKey(c => c.Id);
 
+            builder.HasAlternateKey(c => c.Name);
+
             builder.Property(c => c.Name)
-                   .HasMaxLength(200)
-                   .IsRequired();           
+                   .HasMaxLength(20)
+                   .IsRequired();
+
+            builder.Property(c => c.Password)
+                   .HasMaxLength(20)
+                   .IsRequired();
         }
     }
 }

@@ -166,11 +166,11 @@ namespace CompanyName.MyAppName.DataAccess
                 if (entity.State == EntityState.Added)
                 {
                     entity.Property(Constants.ShadowProperty.CREATED_DATE).CurrentValue = DateTime.UtcNow;
-                    entity.Property(Constants.ShadowProperty.CREATED_BY).CurrentValue = "Gaurav010001";
+                    entity.Property(Constants.ShadowProperty.CREATED_BY).CurrentValue = "Gaurav";
                 }
 
                 entity.Property(Constants.ShadowProperty.MODIFIED_DATE).CurrentValue = DateTime.UtcNow;
-                entity.Property(Constants.ShadowProperty.MODIFIED_BY).CurrentValue = "Gaurav010001";
+                entity.Property(Constants.ShadowProperty.MODIFIED_BY).CurrentValue = "Gaurav";
             }
         }
 
@@ -178,7 +178,7 @@ namespace CompanyName.MyAppName.DataAccess
         /// Handles the exception.
         /// </summary>
         /// <param name="ex">The exception</param>
-        private void HandleException(Exception exception)
+        private static void HandleException(Exception exception)
         {            
             if (exception is DbUpdateConcurrencyException concurrencyEx)
             {
@@ -189,30 +189,22 @@ namespace CompanyName.MyAppName.DataAccess
 
             if (exception is DbUpdateException dbUpdateEx)
             {
-                if (dbUpdateEx.InnerException != null &&
-                    dbUpdateEx.InnerException.InnerException != null)
+                if (dbUpdateEx.InnerException != null)
                 {
-                    if (dbUpdateEx.InnerException.InnerException is SqlException sqlException)
+                    if (dbUpdateEx.InnerException is SqlException sqlException)
                     {
-                        switch (sqlException.Number)
+                        throw sqlException.Number switch
                         {
-                            case 2627:
-                                // Unique constraint error.
-                                throw new CustomException("Record is not Unique", sqlException);
-
-                            case 547:
-                                // Constraint check violation.
-                                throw new CustomException("Constraint Check Violation", sqlException);
-
-                            case 2601:
-                                // Duplicated key row error.
-                                // Constraint violation exception.
-                                throw new CustomException("Constraint Check Violation", sqlException);
-
-                            default:
-                                // A custom exception of yours for other DB issues
-                                throw sqlException;
-                        }
+                            // Unique constraint error.
+                            2627 => new CustomException("Record is not Unique", sqlException),
+                            // Constraint check violation.
+                            547 => new CustomException("Constraint Check Violation", sqlException),
+                            // Duplicated key row error. 
+                            // Constraint violation exception.
+                            2601 => new CustomException("Constraint Check Violation", sqlException),
+                            // A custom exception of yours for other DB issues
+                            _ => sqlException,
+                        };
                     }
 
                     throw dbUpdateEx;

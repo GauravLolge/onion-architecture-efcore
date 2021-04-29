@@ -42,7 +42,7 @@ namespace CompanyName.MyAppName.Domain.Services
         {
             if (user != null)
             {
-                User userEntity = new User() { Name = user.Name, IsActive = user.IsActive };
+                User userEntity = new User() { Name = user.Name, Password = user.Password, IsActive = user.IsActive };
 
                 userEntity.UserSetting = new UserSetting() { Setting = "" };
 

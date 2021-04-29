@@ -1,7 +1,6 @@
 using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repositories;
 using CompanyName.MyAppName.Domain.Services;
-using CompanyName.MyAppName.Infra;
 using CompanyName.MyAppName.WebApi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -98,6 +97,7 @@ namespace CompanyName.MyAppName.WebApi
 
             // Mapping Services.
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         }
 

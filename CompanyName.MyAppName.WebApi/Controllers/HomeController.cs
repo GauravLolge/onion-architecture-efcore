@@ -1,6 +1,7 @@
 ﻿using CompanyName.MyAppName.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Dm = CompanyName.MyAppName.Model.Models;
 
 namespace CompanyName.MyAppName.WebApi.Controllers
 {
@@ -38,11 +39,27 @@ namespace CompanyName.MyAppName.WebApi.Controllers
         /// Gets all users.
         /// </summary>
         /// <returns>Users</returns>
+        [HttpGet]
         public IActionResult GetAllUsers()
         {
             var users = userService.GetAllUsers();
 
             return Ok(users);
+        }
+
+        [HttpPost]
+        public IActionResult AddUser([FromBody] Dm.User user)
+        {
+            var response = BadRequest();
+
+            if (user != null)
+            {
+                userService.AddUser(user);
+
+                return Ok(new { message = "User hasn been added successfully." });
+            }
+
+            return response;
         }
 
         #endregion Public Methods

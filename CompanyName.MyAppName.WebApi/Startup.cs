@@ -2,6 +2,7 @@ using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repositories;
 using CompanyName.MyAppName.Domain.Services;
 using CompanyName.MyAppName.WebApi.Common;
+using CompanyName.MyAppName.WebApi.Common.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,7 +51,6 @@ namespace CompanyName.MyAppName.WebApi
             var projectSettings = sectionProjectSettings.Get<ProjectSettings>();
             services.Configure<ProjectSettings>(options => sectionProjectSettings.Bind(options));
 
-
             // Jwt authentication settings.
             services.AddAuthentication
                     (options =>
@@ -79,6 +79,8 @@ namespace CompanyName.MyAppName.WebApi
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            // Add global filters.
+            services.AddMvc(config => config.Filters.Add(typeof(CustomExceptionFilter)));
 
             // pass connection string to db context.
             services.AddDbContext<AppDbContext>(options =>
@@ -118,7 +120,7 @@ namespace CompanyName.MyAppName.WebApi
             app.UseAuthentication();
 
             app.UseRouting();
-           
+
             app.UseAuthorization();
 
             app.UseMvc();

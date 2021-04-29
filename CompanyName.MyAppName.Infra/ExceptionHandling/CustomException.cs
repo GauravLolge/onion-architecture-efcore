@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CompanyName.MyAppName.Infra.ExceptionHandling
+namespace CompanyName.MyAppName.Infra
 {
     /// <summary>
     /// Provides member to handle custom exception.

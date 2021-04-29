@@ -1,6 +1,8 @@
 using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repositories;
 using CompanyName.MyAppName.Domain.Services;
+using CompanyName.MyAppName.Infra;
+using CompanyName.MyAppName.WebApi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,8 +46,19 @@ namespace CompanyName.MyAppName.WebApi
         {
             services.AddControllers(options => options.EnableEndpointRouting = false);
 
+            // Get project settings from appsettings.
+            var sectionProjectSettings = Configuration.GetSection("ProjectSettings");
+            var projectSettings = sectionProjectSettings.Get<ProjectSettings>();
+            services.Configure<ProjectSettings>(options => sectionProjectSettings.Bind(options));
+
+
             // Jwt authentication settings.
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication
+                    (options =>
+                    {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
                     .AddJwtBearer(options =>
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
@@ -54,11 +67,13 @@ namespace CompanyName.MyAppName.WebApi
                             ValidateAudience = true,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = Configuration["Jwt:Issuer"],
-                            ValidAudience = Configuration["Jwt:Issuer"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                            ValidIssuer = projectSettings.JwtIssuer,
+                            ValidAudience = projectSettings.JwtIssuer,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(projectSettings.JwtSecretKey))
                         };
                     });
+
+
 
             // Set formatter json/xml.
             services.AddMvc()
@@ -82,7 +97,7 @@ namespace CompanyName.MyAppName.WebApi
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             // Mapping Services.
-            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IUserService, UserService>();
 
         }
 
@@ -100,8 +115,10 @@ namespace CompanyName.MyAppName.WebApi
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseAuthentication();
 
+            app.UseRouting();
+           
             app.UseAuthorization();
 
             app.UseMvc();
@@ -110,8 +127,6 @@ namespace CompanyName.MyAppName.WebApi
             //{
             //    endpoints.MapControllerRoute("Default", "api/{controller=Home}/{action=Index}/{id?}");
             //});
-
-            
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using CompanyName.MyAppName.WebApi.Common.Helpers;
+﻿using CompanyName.MyAppName.WebApi.Common;
+using CompanyName.MyAppName.WebApi.Common.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Dm = CompanyName.MyAppName.Model.Models;
 
 namespace CompanyName.MyAppName.WebApi.Controllers
@@ -16,7 +18,7 @@ namespace CompanyName.MyAppName.WebApi.Controllers
     {
         #region Member Variables
 
-        private readonly IConfiguration config;
+        private readonly ProjectSettings projectSettings;
 
         #endregion Member Variables
 
@@ -25,9 +27,9 @@ namespace CompanyName.MyAppName.WebApi.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
         /// </summary>
-        public AccountController(IConfiguration config)
+        public AccountController(IOptions<ProjectSettings> projectSettings)
         {
-            this.config = config;
+            this.projectSettings = projectSettings.Value;
         }
 
         #endregion Constructor
@@ -46,8 +48,8 @@ namespace CompanyName.MyAppName.WebApi.Controllers
 
             if ("" != null && IsValidUser(null))
             {
-                var authToken = SecurityHelper.GenerateJSONWebToken(config);
-                return Ok(new { authToken });
+                var authToken = SecurityHelper.GenerateJSONWebToken(projectSettings);
+                return Ok();
             }
 
             return response;

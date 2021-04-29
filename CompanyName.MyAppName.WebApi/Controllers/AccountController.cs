@@ -27,7 +27,7 @@ namespace CompanyName.MyAppName.WebApi.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
         /// </summary>
-        public AccountController(IOptions<ProjectSettings> projectSettings)
+        public AccountController(IOptionsSnapshot<ProjectSettings> projectSettings)
         {
             this.projectSettings = projectSettings.Value;
         }

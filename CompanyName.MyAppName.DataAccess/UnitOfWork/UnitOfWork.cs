@@ -1,5 +1,4 @@
 ﻿using CompanyName.MyAppName.Infra;
-using CompanyName.MyAppName.Infra.ExceptionHandling;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;

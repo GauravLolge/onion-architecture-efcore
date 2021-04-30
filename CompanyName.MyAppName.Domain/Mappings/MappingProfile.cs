@@ -18,6 +18,10 @@ namespace CompanyName.MyAppName.Domain.MappingProfiles
             CreateMap<Et.User, Dm.User>();
 
             CreateMap<Dm.User, Et.User>();
+
+            CreateMap<Et.UserSetting, Dm.UserSetting>();
+
+            CreateMap<Dm.UserSetting, Et.UserSetting>();
         }        
     }
 }

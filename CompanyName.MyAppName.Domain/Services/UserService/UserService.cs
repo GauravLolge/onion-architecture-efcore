@@ -49,6 +49,10 @@ namespace CompanyName.MyAppName.Domain.Services
         {
             if (userInfo != null)
             {
+                Dm.UserSetting setting = new Dm.UserSetting() { Setting = "{default}" };
+
+                userInfo.UserSetting = setting;
+
                 var user = mapper.Map<User>(userInfo);
 
                 userRepository.Add(user);
@@ -82,9 +86,9 @@ namespace CompanyName.MyAppName.Domain.Services
         /// Gets all users.
         /// </summary>
         /// <returns></returns>
-        public List<User> GetAllUsers()
+        public List<Dm.User> GetAllUsers()
         {
-            return userRepository.GetQueryable().ToList();
+            return mapper.Map<List<Dm.User>>(userRepository.GetQueryable().ToList());
         }
 
         /// <summary>

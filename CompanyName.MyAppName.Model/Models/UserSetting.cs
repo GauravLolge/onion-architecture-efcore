@@ -1,6 +1,6 @@
 ﻿namespace CompanyName.MyAppName.Model.Models
 {
-    public class User : BaseEntity
+    public class UserSetting : BaseEntity
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -11,27 +11,27 @@
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the user identifier.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The user identifier.
         /// </value>
-        public string Name { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Password.
+        /// Gets or sets the user.
         /// </summary>
         /// <value>
-        /// The passord.
+        /// The user.
         /// </value>
-        public string Password { get; set; }
+        public virtual User User { get; set; }
 
         /// <summary>
-        /// Gets or sets the user setting.
+        /// Gets or sets the setting.
         /// </summary>
         /// <value>
-        /// The user setting.
+        /// The setting.
         /// </value>
-        public UserSetting UserSetting { get; set; }
+        public string Setting { get; set; }
     }
 }

@@ -19,7 +19,8 @@ namespace CompanyName.MyAppName.DataAccess.EntityMapping
                    .WithOne(c => c.UserSetting)
                    .HasForeignKey<UserSetting>(c => c.UserId);
 
-            builder.HasQueryFilter(c => c.IsActive == true);
+            // Global filter
+            //builder.HasQueryFilter(c => c.IsActive == true);
         }
     }
 }

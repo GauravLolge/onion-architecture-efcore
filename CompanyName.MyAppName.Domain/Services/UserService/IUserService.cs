@@ -36,7 +36,7 @@ namespace CompanyName.MyAppName.Domain.Services
         /// <summary>
         /// Gets all users.
         /// </summary>
-        /// <returns></returns>
-        List<User> GetAllUsers();
+        /// <returns>Users</returns>
+        List<Dm.User> GetAllUsers();
     }
 }

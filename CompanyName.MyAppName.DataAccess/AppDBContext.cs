@@ -1,6 +1,7 @@
 ﻿using CompanyName.MyAppName.DataAccess.EntityMapping;
 using CompanyName.MyAppName.Infra;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 
 namespace CompanyName.MyAppName.DataAccess
@@ -45,7 +46,8 @@ namespace CompanyName.MyAppName.DataAccess
         /// typically define extension methods on this object that allow you to configure the context.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.UseLazyLoadingProxies()
+                          .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
         }
 
         /// <summary>

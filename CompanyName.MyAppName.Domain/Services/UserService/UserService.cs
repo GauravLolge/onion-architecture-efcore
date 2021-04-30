@@ -28,6 +28,9 @@ namespace CompanyName.MyAppName.Domain.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="unitofWork">The unitof work.</param>
+        /// <param name="mapper">The mapper.</param>
         public UserService(IRepository<User> userRepository,
                            IUnitOfWork unitofWork,
                            IMapper mapper)

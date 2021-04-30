@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Linq;
-using System.Threading;
 
 namespace CompanyName.MyAppName.DataAccess
 {

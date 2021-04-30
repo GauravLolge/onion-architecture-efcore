@@ -1,4 +1,5 @@
-﻿using CompanyName.MyAppName.DataAccess.Repositories;
+﻿using AutoMapper;
+using CompanyName.MyAppName.DataAccess.Repositories;
 using System.Linq;
 using Dm = CompanyName.MyAppName.Model.Models;
 using Et = CompanyName.MyAppName.Core.Entities;
@@ -14,6 +15,7 @@ namespace CompanyName.MyAppName.Domain.Services
         #region Member Variables
 
         private readonly IRepository<Et.User> userRepository;
+        private readonly IMapper mapper;
 
         #endregion Member Variables
 
@@ -21,9 +23,12 @@ namespace CompanyName.MyAppName.Domain.Services
         /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository.</param>
-        public AuthenticationService(IRepository<Et.User> userRepository)
+        /// <param name="mapper">The mapper.</param>
+        public AuthenticationService(IRepository<Et.User> userRepository,
+                                     IMapper mapper)
         {
             this.userRepository = userRepository;
+            this.mapper = mapper;
         }
 
         #region Constructors
@@ -43,16 +48,15 @@ namespace CompanyName.MyAppName.Domain.Services
             if (!string.IsNullOrWhiteSpace(username) &&
                 !string.IsNullOrWhiteSpace(password))
             {
-                var details = userRepository.GetQueryable(false)
+                var userInfo = userRepository.GetQueryable(false)
                                      .Where(k => k.Name.ToLower() == username.ToLower() &&
                                                  k.Password == password)
                                      .Select(k => k)
                                      .FirstOrDefault();
 
-                //TODO Automapper.
-                if (details != null)
+                if (userInfo != null)
                 {
-                    user = new Dm.User() { Name = details.Name };
+                    user = mapper.Map<Dm.User>(userInfo);
                 }
             }
 

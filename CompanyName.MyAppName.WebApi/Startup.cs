@@ -88,6 +88,9 @@ namespace CompanyName.MyAppName.WebApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            // Configure Automapper
+            services.AddAutoMapper(typeof(Domain.MappingProfiles.MappingProfile));
+
             // Mapping application db context.
             services.AddScoped<DbContext, AppDbContext>();
 

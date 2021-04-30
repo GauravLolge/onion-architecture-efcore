@@ -56,7 +56,7 @@ namespace CompanyName.MyAppName.WebApi.Controllers
             {
                 userService.AddUser(user);
 
-                return Ok(new { message = "User hasn been added successfully." });
+                return Ok(new { message = "User has been added successfully." });
             }
 
             return response;

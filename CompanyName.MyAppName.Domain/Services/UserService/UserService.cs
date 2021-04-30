@@ -1,4 +1,5 @@
-﻿using CompanyName.MyAppName.Core.Entities;
+﻿using AutoMapper;
+using CompanyName.MyAppName.Core.Entities;
 using CompanyName.MyAppName.DataAccess;
 using CompanyName.MyAppName.DataAccess.Repositories;
 using System;
@@ -18,6 +19,7 @@ namespace CompanyName.MyAppName.Domain.Services
 
         private readonly IRepository<User> userRepository;
         private readonly IUnitOfWork unitofWork;
+        private readonly IMapper mapper;
 
         #endregion Member Variables
 
@@ -27,10 +29,12 @@ namespace CompanyName.MyAppName.Domain.Services
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
         public UserService(IRepository<User> userRepository,
-                           IUnitOfWork unitofWork)
+                           IUnitOfWork unitofWork,
+                           IMapper mapper)
         {
             this.userRepository = userRepository;
             this.unitofWork = unitofWork;
+            this.mapper = mapper;
         }
 
 
@@ -38,15 +42,13 @@ namespace CompanyName.MyAppName.Domain.Services
         /// Adds the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public void AddUser(Dm.User user)
+        public void AddUser(Dm.User userInfo)
         {
-            if (user != null)
+            if (userInfo != null)
             {
-                User userEntity = new User() { Name = user.Name, Password = user.Password, IsActive = user.IsActive };
+                var user = mapper.Map<User>(userInfo);
 
-                userEntity.UserSetting = new UserSetting() { Setting = "" };
-
-                userRepository.Add(userEntity);
+                userRepository.Add(user);
 
                 unitofWork.Save();
             }

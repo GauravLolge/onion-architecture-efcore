@@ -3,7 +3,6 @@ using CompanyName.MyAppName.WebApi.Common;
 using CompanyName.MyAppName.WebApi.Common.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Dm = CompanyName.MyAppName.Model.Models;
 
